@@ -22,8 +22,20 @@ export class HomePage {
 
   loadPicArray = () => {
     this.http
-      .get<Pic[]>('/assets/test.json')
-      .subscribe(res => (this.picArray = res));
+      .get<Pic[]>('http://media.mw.metropolia.fi/wbma/media?start=0&limit=10')
+      .subscribe(
+        res =>
+          (this.picArray = res.map(x => ({
+            ...x,
+            original: `http://media.mw.metropolia.fi/wbma/uploads/${
+              x.filename
+            }`,
+            thumbnail: `http://media.mw.metropolia.fi/wbma/uploads/${x.filename
+              .split('.')
+              .slice(0, -1)
+              .join('.')}-tn160.png`
+          })))
+      );
   };
 
   showFullImage = (item: Pic) => {
