@@ -9,5 +9,11 @@ export default interface Pic {
   mime_type: string;
   time_added: string;
   original: string;
-  thumbnail: string;
+  thumbnails: Thumbnails;
+}
+
+export interface Thumbnails {
+  160: string;
+  320?: string;
+  640?: string;
 }
