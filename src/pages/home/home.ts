@@ -14,15 +14,28 @@ export class HomePage {
     public navCtrl: NavController,
     private photoViewer: PhotoViewer,
     private mediaProvider: MediaProvider
-  ) {
-    mediaProvider.getAllFiles().subscribe(res => {
-      this.picArray = res.map(file => mediaProvider.getMediaFile(file));
-    });
+  ) {}
+
+  ionViewDidLoad() {
+    this.getAllFiles();
   }
 
   picArray: Pic[] = [];
 
+  getAllFiles = () => {
+    this.mediaProvider.getAllFiles().subscribe(res => {
+      Promise.all(
+        res.map(file =>
+          this.mediaProvider.getSingleMedia(file.file_id).toPromise()
+        )
+      ).then(picArray => (this.picArray = picArray));
+    });
+  };
+
   showFullImage = (item: Pic) => {
-    this.photoViewer.show(item.original, item.title);
+    this.photoViewer.show(
+      `http://media.mw.metropolia.fi/wbma/uploads/${item.filename}`,
+      item.title
+    );
   };
 }

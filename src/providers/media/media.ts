@@ -20,16 +20,7 @@ export class MediaProvider {
     );
   };
 
-  getMediaFile = (file: { filename: string }): Pic => {
-    return {
-      ...file,
-      original: `http://media.mw.metropolia.fi/wbma/uploads/${file.filename}`,
-      thumbnails: {
-        160: `http://media.mw.metropolia.fi/wbma/uploads/${file.filename
-          .split('.')
-          .slice(0, -1)
-          .join('.')}-tn160.png`
-      }
-    } as Pic;
+  getSingleMedia = (id: number) => {
+    return this.http.get<Pic>(`http://media.mw.metropolia.fi/wbma/media/${id}`);
   };
 }

@@ -8,7 +8,7 @@ export default interface Pic {
   media_type: 'image' | 'video' | 'audio';
   mime_type: string;
   time_added: string;
-  original: string;
+  screenshot: string;
   thumbnails: Thumbnails;
 }
 

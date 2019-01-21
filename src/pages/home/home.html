@@ -12,7 +12,11 @@
   <ion-list>
     <ion-item *ngFor="let item of picArray">
       <ion-thumbnail item-start>
-        <img src="{{ item.thumbnails[160] }}" />
+        <img
+          src="http://media.mw.metropolia.fi/wbma/uploads/{{
+            item.thumbnails[160]
+          }}"
+        />
       </ion-thumbnail>
       <h2>{{ item.title }}</h2>
       <p>{{ item.details }}</p>
