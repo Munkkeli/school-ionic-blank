@@ -1,26 +1,61 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import Pic from '../../interfaces/pic';
+import {
+  ILoginResponse,
+  IPic,
+  IUser,
+  IUsernameAvailableResponse
+} from '../../interfaces/media';
 
-/*
-  Generated class for the MediaProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class MediaProvider {
   constructor(public http: HttpClient) {
     this.http = http;
   }
 
+  mediaApi = 'http://media.mw.metropolia.fi/wbma';
+
+  loggedIn = false;
+
   getAllFiles = () => {
-    return this.http.get<Pic[]>(
-      'http://media.mw.metropolia.fi/wbma/media?start=0&limit=10'
-    );
+    return this.http.get<IPic[]>(this.mediaApi + '/media?start=0&limit=10');
   };
 
   getSingleMedia = (id: number) => {
-    return this.http.get<Pic>(`http://media.mw.metropolia.fi/wbma/media/${id}`);
+    return this.http.get<IPic>(this.mediaApi + `/media/${id}`);
+  };
+
+  login = (user: IUser) => {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<ILoginResponse>(
+      this.mediaApi + '/login',
+      user,
+      httpOptions
+    );
+  };
+
+  register = (user: IUser) => {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+
+    return this.http.post<ILoginResponse>(
+      this.mediaApi + '/users',
+      user,
+      httpOptions
+    );
+  };
+
+  checkUsername = (username: string) => {
+    return this.http.get<IUsernameAvailableResponse>(
+      this.mediaApi + '/users/username/' + username
+    );
   };
 }

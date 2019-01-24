@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
-import { HttpClient } from '@angular/common/http';
 import { MediaProvider } from '../../providers/media/media';
-import Pic from '../../interfaces/pic';
+import { IPic } from '../../interfaces/media';
 
 @Component({
   selector: 'page-home',
@@ -20,21 +19,23 @@ export class HomePage {
     this.getAllFiles();
   }
 
-  picArray: Pic[] = [];
+  picArray: IPic[] = [];
 
   getAllFiles = () => {
     this.mediaProvider.getAllFiles().subscribe(res => {
       Promise.all(
-        res.map(file =>
+        res.map(async file =>
           this.mediaProvider.getSingleMedia(file.file_id).toPromise()
         )
-      ).then(picArray => {
-        this.picArray = picArray;
-      });
+      )
+        .then(picArray => {
+          this.picArray = picArray;
+        })
+        .catch(error => console.error(error));
     });
   };
 
-  showFullImage = (item: Pic) => {
+  showFullImage = (item: IPic) => {
     this.photoViewer.show(
       `http://media.mw.metropolia.fi/wbma/uploads/${item.filename}`,
       item.title

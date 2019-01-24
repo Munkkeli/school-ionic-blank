@@ -1,7 +1,17 @@
 <ion-content padding>
   <ion-tabs>
-    <ion-tab [root]="home" tabTitle="Home"></ion-tab>
-    <ion-tab [root]="login" tabTitle="Login"></ion-tab>
-    <ion-tab [root]="logout" tabTitle="Logout"></ion-tab>
+    <ion-tab [root]="home" tabTitle="Home" tabIcon="home"></ion-tab>
+    <ion-tab
+      [show]="!mediaProvider.loggedIn"
+      [root]="login"
+      tabTitle="Login"
+      tabIcon="person-add"
+    ></ion-tab>
+    <ion-tab
+      [show]="mediaProvider.loggedIn"
+      [root]="logout"
+      tabTitle="Logout"
+      tabIcon="exit"
+    ></ion-tab>
   </ion-tabs>
 </ion-content>

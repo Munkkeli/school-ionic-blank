@@ -5,14 +5,75 @@
   Ionic pages and navigation.
 -->
 <ion-header>
-
-  <ion-navbar>
-    <ion-title>login-register</ion-title>
-  </ion-navbar>
-
+  <ion-navbar> <ion-title>login-register</ion-title> </ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
+  <form *ngIf="!viewRegister" (ngSubmit)="loginForm()">
+    <ion-item>
+      <ion-label>Username</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="login.username"
+        name="username"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input
+        type="password"
+        [(ngModel)]="login.password"
+        name="password"
+      ></ion-input>
+    </ion-item>
+    <button ion-button type="submit" block>Login</button>
+    <button ion-button (click)="toggleViewRegister()" clear block>
+      Register
+    </button>
+  </form>
 
+  <form *ngIf="viewRegister" (ngSubmit)="registerForm()">
+    <ion-item>
+      <ion-label>Username</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="register.username"
+        name="username"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Email</ion-label>
+      <ion-input
+        type="email"
+        [(ngModel)]="register.email"
+        name="email"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Full Name</ion-label>
+      <ion-input
+        type="text"
+        [(ngModel)]="register.full_name"
+        name="full_name"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Password</ion-label>
+      <ion-input
+        type="password"
+        [(ngModel)]="register.password"
+        name="password"
+      ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label>Re-Password</ion-label>
+      <ion-input
+        type="password"
+        [(ngModel)]="register.re_password"
+        name="re_password"
+      ></ion-input>
+    </ion-item>
+    <button ion-button type="submit" block>Register</button>
+    <button ion-button (click)="toggleViewRegister()" clear block>Login</button>
+  </form>
 </ion-content>

@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-
 import { HomePage } from '../home/home';
 import { LoginRegisterPage } from '../login-register/login-register';
 import { LogoutPage } from '../logout/logout';
+import { MediaProvider } from '../../providers/media/media';
 
 /**
  * Generated class for the MenuPage page.
@@ -17,7 +17,11 @@ import { LogoutPage } from '../logout/logout';
   templateUrl: 'menu.html'
 })
 export class MenuPage {
-  constructor(public navCtrl: NavController, public navParams: NavParams) {}
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public mediaProvider: MediaProvider
+  ) {}
 
   home = HomePage;
   login = LoginRegisterPage;
