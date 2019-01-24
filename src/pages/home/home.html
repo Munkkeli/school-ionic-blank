@@ -3,18 +3,12 @@
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the
-    <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
-
   <ion-list>
     <ion-item *ngFor="let item of picArray">
       <ion-thumbnail item-start>
         <img
           src="http://media.mw.metropolia.fi/wbma/uploads/{{
-            item.thumbnails[160]
+            item.thumbnails.w160
           }}"
         />
       </ion-thumbnail>

@@ -8,13 +8,16 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
+import { MenuPage } from '../pages/menu/menu';
+import { LoginRegisterPage } from '../pages/login-register/login-register';
+import { LogoutPage } from '../pages/logout/logout';
 import { MediaProvider } from '../providers/media/media';
 
 @NgModule({
-  declarations: [MyApp, HomePage],
+  declarations: [MyApp, HomePage, MenuPage, LoginRegisterPage, LogoutPage],
   imports: [BrowserModule, IonicModule.forRoot(MyApp), HttpClientModule],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp, HomePage],
+  entryComponents: [MyApp, HomePage, MenuPage, LoginRegisterPage, LogoutPage],
   providers: [
     StatusBar,
     SplashScreen,

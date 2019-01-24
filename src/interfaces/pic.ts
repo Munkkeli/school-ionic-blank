@@ -13,7 +13,7 @@ export default interface Pic {
 }
 
 export interface Thumbnails {
-  160: string;
-  320?: string;
-  640?: string;
+  w160: string;
+  w320?: string;
+  w640?: string;
 }

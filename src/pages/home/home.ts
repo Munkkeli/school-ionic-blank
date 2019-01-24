@@ -28,7 +28,9 @@ export class HomePage {
         res.map(file =>
           this.mediaProvider.getSingleMedia(file.file_id).toPromise()
         )
-      ).then(picArray => (this.picArray = picArray));
+      ).then(picArray => {
+        this.picArray = picArray;
+      });
     });
   };
 
