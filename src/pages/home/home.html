@@ -8,8 +8,7 @@
       <ion-thumbnail item-start>
         <img
           [src]="
-            'http://media.mw.metropolia.fi/wbma/uploads/' +
-            (item.file_id | thumbnailPipe: 'small')
+            mediaProvider.mediaUploads + (item.file_id | thumbnailPipe: 'small')
           "
         />
       </ion-thumbnail>

@@ -14,7 +14,7 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     private photoViewer: PhotoViewer,
-    private mediaProvider: MediaProvider,
+    public mediaProvider: MediaProvider,
     public pipesModule: PipesModule
   ) {}
 
@@ -30,7 +30,7 @@ export class HomePage {
 
   showFullImage = (item: IPic) => {
     this.photoViewer.show(
-      `http://media.mw.metropolia.fi/wbma/uploads/${item.filename}`,
+      this.mediaProvider.mediaUploads + item.filename,
       item.title
     );
   };

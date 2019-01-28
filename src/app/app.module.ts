@@ -11,11 +11,19 @@ import { HomePage } from '../pages/home/home';
 import { MenuPage } from '../pages/menu/menu';
 import { LoginRegisterPage } from '../pages/login-register/login-register';
 import { LogoutPage } from '../pages/logout/logout';
+import { ProfilePage } from '../pages/profile/profile';
 import { MediaProvider } from '../providers/media/media';
 import { PipesModule } from '../pipes/pipes.module';
 
 @NgModule({
-  declarations: [MyApp, HomePage, MenuPage, LoginRegisterPage, LogoutPage],
+  declarations: [
+    MyApp,
+    HomePage,
+    MenuPage,
+    LoginRegisterPage,
+    LogoutPage,
+    ProfilePage
+  ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
@@ -23,7 +31,14 @@ import { PipesModule } from '../pipes/pipes.module';
     PipesModule
   ],
   bootstrap: [IonicApp],
-  entryComponents: [MyApp, HomePage, MenuPage, LoginRegisterPage, LogoutPage],
+  entryComponents: [
+    MyApp,
+    HomePage,
+    MenuPage,
+    LoginRegisterPage,
+    LogoutPage,
+    ProfilePage
+  ],
   providers: [
     StatusBar,
     SplashScreen,

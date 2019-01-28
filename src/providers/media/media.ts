@@ -14,6 +14,7 @@ export class MediaProvider {
   }
 
   mediaApi = 'http://media.mw.metropolia.fi/wbma';
+  mediaUploads = 'http://media.mw.metropolia.fi/wbma/uploads/';
 
   loggedIn = false;
 
@@ -23,6 +24,10 @@ export class MediaProvider {
 
   getSingleMedia = (id: number) => {
     return this.http.get<IPic>(this.mediaApi + `/media/${id}`);
+  };
+
+  getAllFilesByTag = (tag: string) => {
+    return this.http.get<IPic[]>(this.mediaApi + '/tags/' + tag);
   };
 
   login = (user: IUser) => {
