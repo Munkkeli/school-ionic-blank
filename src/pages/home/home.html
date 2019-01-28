@@ -4,12 +4,13 @@
 
 <ion-content padding>
   <ion-list>
-    <ion-item *ngFor="let item of picArray">
+    <ion-item *ngFor="let item of (picArray | async)">
       <ion-thumbnail item-start>
         <img
-          src="http://media.mw.metropolia.fi/wbma/uploads/{{
-            item.thumbnails.w160
-          }}"
+          [src]="
+            'http://media.mw.metropolia.fi/wbma/uploads/' +
+            (item.file_id | thumbnailPipe: 'small')
+          "
         />
       </ion-thumbnail>
       <h2>{{ item.title }}</h2>

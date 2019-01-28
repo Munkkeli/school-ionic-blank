@@ -3,6 +3,8 @@ import { NavController } from 'ionic-angular';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { MediaProvider } from '../../providers/media/media';
 import { IPic } from '../../interfaces/media';
+import { Observable } from 'rxjs/Observable';
+import { PipesModule } from '../../pipes/pipes.module';
 
 @Component({
   selector: 'page-home',
@@ -12,27 +14,18 @@ export class HomePage {
   constructor(
     public navCtrl: NavController,
     private photoViewer: PhotoViewer,
-    private mediaProvider: MediaProvider
+    private mediaProvider: MediaProvider,
+    public pipesModule: PipesModule
   ) {}
 
   ionViewDidLoad() {
     this.getAllFiles();
   }
 
-  picArray: IPic[] = [];
+  picArray: Observable<IPic[]>;
 
   getAllFiles = () => {
-    this.mediaProvider.getAllFiles().subscribe(res => {
-      Promise.all(
-        res.map(async file =>
-          this.mediaProvider.getSingleMedia(file.file_id).toPromise()
-        )
-      )
-        .then(picArray => {
-          this.picArray = picArray;
-        })
-        .catch(error => console.error(error));
-    });
+    this.picArray = this.mediaProvider.getAllFiles();
   };
 
   showFullImage = (item: IPic) => {
