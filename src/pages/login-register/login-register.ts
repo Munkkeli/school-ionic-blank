@@ -1,4 +1,10 @@
 import { Component } from '@angular/core';
+import {
+  FormGroup,
+  FormControl,
+  Validators,
+  AbstractControl
+} from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 import { MediaProvider } from '../../providers/media/media';
 import { HomePage } from '../home/home';
@@ -41,15 +47,57 @@ export class LoginRegisterPage {
     re_password: string;
   };
 
-  loginForm = () => {
-    this.mediaProvider.login(this.login).subscribe(
+  checkUsername = (control: AbstractControl) =>
+    new Promise(resolve => {
+      if (!control || !control.value) return resolve(null);
+      this.mediaProvider.checkUsername(control.value).subscribe(res => {
+        if (!res.available) return resolve({ usernameTaken: true });
+        return resolve(null);
+      });
+    });
+
+  checkFieldValidity = (field: string) => {
+    return (
+      this.registerForm.controls[field].invalid &&
+      this.registerForm.controls[field].dirty &&
+      this.registerForm.controls[field].touched &&
+      this.registerForm.value[field]
+    );
+  };
+
+  registerForm = new FormGroup({
+    username: new FormControl(
+      '',
+      [Validators.required, Validators.minLength(3)],
+      this.checkUsername
+    ),
+    email: new FormControl('', [Validators.required, Validators.email]),
+    full_name: new FormControl(''),
+    password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(5)
+    ]),
+    re_password: new FormControl('', [
+      Validators.required,
+      Validators.minLength(5),
+      (control: AbstractControl) => {
+        if (!control.parent) return null;
+        if (control.parent.value.password !== control.value) {
+          return { passwordMatch: true };
+        }
+        return null;
+      }
+    ])
+  });
+
+  loginFormSubmit = (data?: { username: string; password: string }) => {
+    this.mediaProvider.login(data || this.login).subscribe(
       res => {
         this.mediaProvider.loggedIn = true;
         localStorage.setItem('token', res.token);
         localStorage.setItem('user', JSON.stringify(res.user));
         this.login = {} as any;
         this.navCtrl.push(HomePage).catch(console.error);
-        // TODO: Save to localStorage
       },
       error => {
         console.error(error);
@@ -57,41 +105,25 @@ export class LoginRegisterPage {
     );
   };
 
-  registerForm = () => {
-    if (this.register.password !== this.register.re_password) return;
-
+  registerFormSubmit = () => {
     this.mediaProvider
-      .checkUsername(this.register.username)
-      .subscribe(resAvailable => {
-        if (!resAvailable.available) return;
-
-        delete this.register.re_password;
-
-        this.mediaProvider.register(this.register).subscribe(
-          resRegister => {
-            this.login = {
-              username: this.register.username,
-              password: this.register.password
-            };
-            this.register = {} as any;
-            this.viewRegister = false;
-            this.loginForm();
-          },
-          error => {
-            console.error(error);
-          }
-        );
-      });
-  };
-
-  checkUsername = () => {
-    this.mediaProvider.checkUsername(this.register.username).subscribe(res => {
-      this.error.username = !res.available;
-    });
-  };
-
-  checkPassword = () => {
-    this.error.password = this.register.password !== this.register.re_password;
+      .register({
+        ...this.registerForm.value,
+        re_password: undefined
+      })
+      .subscribe(
+        res => {
+          this.viewRegister = false;
+          this.loginFormSubmit({
+            username: this.registerForm.get('username').value,
+            password: this.registerForm.get('password').value
+          });
+          this.registerForm.reset();
+        },
+        error => {
+          console.error(error);
+        }
+      );
   };
 
   toggleViewRegister = () => {
