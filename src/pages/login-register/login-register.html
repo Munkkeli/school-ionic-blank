@@ -28,15 +28,18 @@
     </ion-item>
     <button ion-button type="submit" block>Login</button>
     <button ion-button (click)="toggleViewRegister()" clear block>
-      Register
+      No account yet?
     </button>
   </form>
 
   <form *ngIf="viewRegister" (ngSubmit)="registerForm()">
     <ion-item>
-      <ion-label>Username</ion-label>
+      <ion-label color="{{ error.username ? 'danger' : '' }}"
+        >Username</ion-label
+      >
       <ion-input
         type="text"
+        (ionBlur)="checkUsername()"
         [(ngModel)]="register.username"
         name="username"
       ></ion-input>
@@ -58,7 +61,9 @@
       ></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Password</ion-label>
+      <ion-label color="{{ error.password ? 'danger' : '' }}"
+        >Password</ion-label
+      >
       <ion-input
         type="password"
         [(ngModel)]="register.password"
@@ -66,14 +71,19 @@
       ></ion-input>
     </ion-item>
     <ion-item>
-      <ion-label>Re-Password</ion-label>
+      <ion-label color="{{ error.password ? 'danger' : '' }}"
+        >Re-Password</ion-label
+      >
       <ion-input
         type="password"
+        (ionBlur)="checkPassword()"
         [(ngModel)]="register.re_password"
         name="re_password"
       ></ion-input>
     </ion-item>
     <button ion-button type="submit" block>Register</button>
-    <button ion-button (click)="toggleViewRegister()" clear block>Login</button>
+    <button ion-button (click)="toggleViewRegister()" clear block>
+      Already have an account?
+    </button>
   </form>
 </ion-content>

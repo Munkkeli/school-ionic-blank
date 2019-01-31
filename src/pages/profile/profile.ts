@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { MediaProvider } from '../../providers/media/media';
 import { IUser } from '../../interfaces/media';
 import { LogoutPage } from '../logout/logout';
@@ -47,6 +47,6 @@ export class ProfilePage {
   };
 
   logout = () => {
-    this.navCtrl.push(LogoutPage);
+    this.navCtrl.push(LogoutPage).catch(console.error);
   };
 }

@@ -27,6 +27,11 @@ export class LoginRegisterPage {
 
   viewRegister = false;
 
+  error = {
+    username: false,
+    password: false
+  };
+
   login = {} as { username: string; password: string };
   register = {} as {
     username: string;
@@ -77,6 +82,16 @@ export class LoginRegisterPage {
           }
         );
       });
+  };
+
+  checkUsername = () => {
+    this.mediaProvider.checkUsername(this.register.username).subscribe(res => {
+      this.error.username = !res.available;
+    });
+  };
+
+  checkPassword = () => {
+    this.error.password = this.register.password !== this.register.re_password;
   };
 
   toggleViewRegister = () => {
