@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {
-  FormGroup,
+  AbstractControl,
   FormControl,
-  Validators,
-  AbstractControl
+  FormGroup,
+  Validators
 } from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 import { MediaProvider } from '../../providers/media/media';
@@ -47,7 +47,7 @@ export class LoginRegisterPage {
     re_password: string;
   };
 
-  checkUsername = (control: AbstractControl) =>
+  checkUsername = async (control: AbstractControl) =>
     new Promise(resolve => {
       if (!control || !control.value) return resolve(null);
       this.mediaProvider.checkUsername(control.value).subscribe(res => {
