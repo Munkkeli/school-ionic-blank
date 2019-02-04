@@ -37,6 +37,6 @@ export class HomePage {
   };
 
   goToUpload = () => {
-    this.navCtrl.push(UploadPage);
+    this.navCtrl.push(UploadPage).catch(console.error);
   };
 }

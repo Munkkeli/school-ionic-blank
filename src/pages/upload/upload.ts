@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
 import {
   IonicPage,
+  LoadingController,
   NavController,
-  NavParams,
-  LoadingController
+  NavParams
 } from 'ionic-angular';
 import { MediaProvider } from '../../providers/media/media';
 
@@ -66,7 +66,7 @@ export class UploadPage {
   };
 
   showPreview = file => {
-    let reader = new FileReader();
+    const reader = new FileReader();
     reader.onload = (event: any) => {
       this.image = event.target.result;
     };
@@ -74,11 +74,11 @@ export class UploadPage {
   };
 
   uploadFormSubmit = () => {
-    let loading = this.loadingCtrl.create({
+    const loading = this.loadingCtrl.create({
       content: 'Please wait...'
     });
 
-    loading.present();
+    loading.present().catch(console.error);
 
     const data = new FormData();
     data.append('title', this.upload.title);
@@ -87,7 +87,7 @@ export class UploadPage {
 
     const moveOn = () => {
       setTimeout(() => {
-        loading.dismiss();
+        loading.dismiss().catch(console.error);
         this.navCtrl.pop().catch(console.error);
       }, 2000);
     };
