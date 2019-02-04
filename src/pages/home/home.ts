@@ -5,6 +5,7 @@ import { MediaProvider } from '../../providers/media/media';
 import { IPic } from '../../interfaces/media';
 import { Observable } from 'rxjs/Observable';
 import { PipesModule } from '../../pipes/pipes.module';
+import { UploadPage } from '../upload/upload';
 
 @Component({
   selector: 'page-home',
@@ -18,7 +19,7 @@ export class HomePage {
     public pipesModule: PipesModule
   ) {}
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.getAllFiles();
   }
 
@@ -33,5 +34,9 @@ export class HomePage {
       this.mediaProvider.mediaUploads + item.filename,
       item.title
     );
+  };
+
+  goToUpload = () => {
+    this.navCtrl.push(UploadPage);
   };
 }

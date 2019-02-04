@@ -12,6 +12,7 @@ import { MenuPage } from '../pages/menu/menu';
 import { LoginRegisterPage } from '../pages/login-register/login-register';
 import { LogoutPage } from '../pages/logout/logout';
 import { ProfilePage } from '../pages/profile/profile';
+import { UploadPage } from '../pages/upload/upload';
 import { MediaProvider } from '../providers/media/media';
 import { PipesModule } from '../pipes/pipes.module';
 
@@ -22,7 +23,8 @@ import { PipesModule } from '../pipes/pipes.module';
     MenuPage,
     LoginRegisterPage,
     LogoutPage,
-    ProfilePage
+    ProfilePage,
+    UploadPage
   ],
   imports: [
     BrowserModule,
@@ -37,7 +39,8 @@ import { PipesModule } from '../pipes/pipes.module';
     MenuPage,
     LoginRegisterPage,
     LogoutPage,
-    ProfilePage
+    ProfilePage,
+    UploadPage
   ],
   providers: [
     StatusBar,

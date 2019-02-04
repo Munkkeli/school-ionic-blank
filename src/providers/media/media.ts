@@ -30,6 +30,33 @@ export class MediaProvider {
     return this.http.get<IPic[]>(this.mediaApi + '/tags/' + tag);
   };
 
+  upload = (data: any) => {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'x-access-token': localStorage.getItem('token')
+      })
+    };
+
+    return this.http.post<any>(this.mediaApi + '/media', data, httpOptions);
+  };
+
+  addTag = (id: number, tag: string) => {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'x-access-token': localStorage.getItem('token')
+      })
+    };
+
+    return this.http.post<any>(
+      this.mediaApi + '/tags',
+      {
+        file_id: id,
+        tag
+      },
+      httpOptions
+    );
+  };
+
   login = (user: IUser) => {
     const httpOptions = {
       headers: new HttpHeaders({
