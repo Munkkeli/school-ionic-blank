@@ -3,9 +3,11 @@ import {
   IonicPage,
   LoadingController,
   NavController,
-  NavParams
+  NavParams,
+  Platform
 } from 'ionic-angular';
 import { MediaProvider } from '../../providers/media/media';
+import { Chooser } from '@ionic-native/chooser';
 
 /**
  * Generated class for the UploadPage page.
@@ -27,7 +29,11 @@ interface IUpload {
 export class UploadPage {
   upload: IUpload = {};
   image: any;
-  file: any;
+  file: any = null;
+  blob: any = null;
+
+  showChooser = false;
+  preview = false;
 
   changed = false;
   style = {
@@ -42,17 +48,52 @@ export class UploadPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private mediaProvider: MediaProvider,
-    public loadingCtrl: LoadingController
-  ) {}
+    public loadingCtrl: LoadingController,
+    private chooser: Chooser,
+    public plt: Platform
+  ) {
+    this.showChooser = !plt.is('core');
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UploadPage');
   }
 
+  handleFileChoose = () => {
+    this.chooser
+      .getFile('image/*,video/*,audio/*')
+      .then(file => {
+        if (!file) return;
+
+        const blob = new Blob([file.data], {
+          type: file.mediaType
+        });
+
+        this.blob = blob;
+        this.showPreview(blob, file.mediaType);
+      })
+      .catch(console.error);
+  };
+
+  handleClear = () => {
+    this.upload.title = '';
+    this.upload.description = '';
+    this.file = '';
+    this.blob = '';
+    this.preview = false;
+
+    this.style = {
+      brightness: 50,
+      contrast: 50,
+      saturation: 50,
+      sepia: 0
+    };
+  };
+
   handleFileChange = event => {
     if (event.target.files && event.target.files[0]) {
       this.file = event.target.files[0];
-      this.showPreview(event.target.files[0]);
+      this.showPreview(event.target.files[0], event.target.files[0].type);
     }
   };
 
@@ -65,7 +106,15 @@ export class UploadPage {
     this.changed = true;
   };
 
-  showPreview = file => {
+  showPreview = (file, mimeType: string) => {
+    console.log(mimeType);
+
+    if (mimeType.split('/')[0] !== 'image') {
+      return;
+    }
+
+    this.preview = true;
+
     const reader = new FileReader();
     reader.onload = (event: any) => {
       this.image = event.target.result;
@@ -81,11 +130,14 @@ export class UploadPage {
     loading.present().catch(console.error);
 
     const data = new FormData();
-    data.append('title', this.upload.title);
-    data.append('description', this.upload.description);
-    data.append('file', this.file);
+    data.append('title', this.upload.title || '');
+    data.append('description', this.upload.description || '');
+    data.append('file', this.blob);
 
     const moveOn = () => {
+      this.file = null;
+      this.blob = null;
+
       setTimeout(() => {
         loading.dismiss().catch(console.error);
         this.navCtrl.pop().catch(console.error);
