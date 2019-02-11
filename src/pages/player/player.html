@@ -1,0 +1,37 @@
+<!--
+  Generated template for the PlayerPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title>Player</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <div *ngIf="media">
+    <video *ngIf="media.media_type === 'video'" controls>
+      <source
+        [src]="mediaProvider.mediaUploads + media.filename"
+        [type]="media.mime_type"
+      />
+    </video>
+    <audio *ngIf="media.media_type === 'audio'" controls>
+      <source
+        [src]="mediaProvider.mediaUploads + media.filename"
+        [type]="media.mime_type"
+      />
+    </audio>
+    <img
+      *ngIf="media.media_type === 'image'"
+      [src]="mediaProvider.mediaUploads + media.filename"
+      [ngStyle]="{ filter: style }"
+    />
+
+    <h2>{{ media.title }}</h2>
+    <h5>by {{ username }}</h5>
+    <p>{{ media.description | description }}</p>
+  </div>
+</ion-content>

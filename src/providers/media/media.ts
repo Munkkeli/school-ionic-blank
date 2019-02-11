@@ -30,6 +30,16 @@ export class MediaProvider {
     return this.http.get<IPic[]>(this.mediaApi + '/tags/' + tag);
   };
 
+  getUser = (id: number) => {
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'x-access-token': localStorage.getItem('token')
+      })
+    };
+
+    return this.http.get<IUser>(this.mediaApi + `/users/${id}`, httpOptions);
+  };
+
   upload = (data: any) => {
     const httpOptions = {
       headers: new HttpHeaders({

@@ -6,6 +6,7 @@ import { IPic } from '../../interfaces/media';
 import { Observable } from 'rxjs/Observable';
 import { PipesModule } from '../../pipes/pipes.module';
 import { UploadPage } from '../upload/upload';
+import { PlayerPage } from '../player/player';
 
 @Component({
   selector: 'page-home',
@@ -30,10 +31,16 @@ export class HomePage {
   };
 
   showFullImage = (item: IPic) => {
+    /*
     this.photoViewer.show(
       this.mediaProvider.mediaUploads + item.filename,
       item.title
     );
+    */
+
+    this.navCtrl.push(PlayerPage, {
+      id: item.file_id
+    });
   };
 
   goToUpload = () => {

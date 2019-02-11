@@ -63,6 +63,7 @@
     <ion-range
       [(ngModel)]="style.brightness"
       pin="true"
+      max="200"
       (ionChange)="handleStyleChange()"
     >
       <ion-icon small range-left name="sunny"></ion-icon>
@@ -71,6 +72,7 @@
     <ion-range
       [(ngModel)]="style.contrast"
       pin="true"
+      max="200"
       (ionChange)="handleStyleChange()"
     >
       <ion-icon small range-left name="contrast"></ion-icon>
@@ -79,6 +81,7 @@
     <ion-range
       [(ngModel)]="style.saturation"
       pin="true"
+      max="200"
       (ionChange)="handleStyleChange()"
     >
       <ion-icon small range-left name="water"></ion-icon>
@@ -87,6 +90,7 @@
     <ion-range
       [(ngModel)]="style.sepia"
       pin="true"
+      max="100"
       (ionChange)="handleStyleChange()"
     >
       <ion-icon small range-left name="thermometer"></ion-icon>

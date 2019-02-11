@@ -37,9 +37,9 @@ export class UploadPage {
 
   changed = false;
   style = {
-    brightness: 50,
-    contrast: 50,
-    saturation: 50,
+    brightness: 100,
+    contrast: 100,
+    saturation: 100,
     sepia: 0
   };
   filter = '';
@@ -83,9 +83,9 @@ export class UploadPage {
     this.preview = false;
 
     this.style = {
-      brightness: 50,
-      contrast: 50,
-      saturation: 50,
+      brightness: 100,
+      contrast: 100,
+      saturation: 100,
       sepia: 0
     };
   };
@@ -98,10 +98,9 @@ export class UploadPage {
   };
 
   handleStyleChange = () => {
-    this.filter = `brightness(${this.style.brightness * 2}%) contrast(${this
-      .style.contrast * 2}%) saturate(${this.style.saturation * 2}%) sepia(${
-      this.style.sepia
-    }%)`;
+    this.filter = `brightness(${this.style.brightness}%) contrast(${
+      this.style.contrast
+    }%) saturate(${this.style.saturation}%) sepia(${this.style.sepia}%)`;
 
     this.changed = true;
   };
@@ -129,10 +128,15 @@ export class UploadPage {
 
     loading.present().catch(console.error);
 
+    let description = `[d]${this.upload.description || ''}[/d]`;
+    if (this.changed) {
+      description += `[f]${JSON.stringify(this.style)}[/f]`;
+    }
+
     const data = new FormData();
     data.append('title', this.upload.title || '');
-    data.append('description', this.upload.description || '');
-    data.append('file', this.blob);
+    data.append('description', description);
+    data.append('file', this.file || this.blob);
 
     const moveOn = () => {
       this.file = null;
@@ -145,6 +149,9 @@ export class UploadPage {
     };
 
     this.mediaProvider.upload(data).subscribe(res => {
+      moveOn();
+
+      /*
       if (this.changed) {
         this.mediaProvider
           .addTag(res.file_id, `filter: ${this.filter}`)
@@ -154,6 +161,7 @@ export class UploadPage {
       } else {
         moveOn();
       }
+      */
     });
   };
 }

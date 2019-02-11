@@ -24,6 +24,8 @@ export class ThumbnailPipe implements PipeTransform {
       this.cachedId = value;
 
       this.mediaProvider.getSingleMedia(value).subscribe(res => {
+        if (!res.thumbnails) return res.screenshot;
+
         switch (args[0]) {
           case 'small':
           default:
